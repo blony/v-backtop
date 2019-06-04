@@ -10,9 +10,8 @@ export default {
   data() {
     return {
       scrollTop: 0,
-      time: 0,
-      dParams: 20,
-      scrollState: 0
+      scrollState: 0,
+      timer: 0
     }
   },
   computed: {
@@ -31,20 +30,23 @@ export default {
       }
       this.scrollState = 1
       e.preventDefault()
-      //   const distance =
-      //     document.documentElement.scrollTop || document.body.scrollTop
       const _this = this
-      this.time = setInterval(function() {
-        _this.gotoTop(_this.scrollTop - _this.dParams)
-      }, 10)
+      clearInterval(this.timer)
+      this.timer = setInterval(function() {
+        _this.gotoTop()
+      }, 8)
     },
-    gotoTop(distance) {
-      this.dParams += 20
-      distance = distance > 0 ? distance : 0
-      document.documentElement.scrollTop = document.body.scrollTop = window.pageYOffset = distance
-      if (this.scrollTop < 10) {
-        clearInterval(this.time)
-        this.dParams = 20
+    gotoTop() {
+      let leader =
+        document.documentElement.scrollTop ||
+        window.pageYOffset ||
+        document.body.scrollTop
+      let step = (0 - leader) / 10
+      step = leader > 0 ? Math.floor(step) : Math.ceil(step)
+      leader = leader + step
+      document.documentElement.scrollTop = document.body.scrollTop = window.pageYOffset = leader
+      if (leader === 0) {
+        clearInterval(this.timer)
         this.scrollState = 0
       }
     },
