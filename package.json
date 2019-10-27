@@ -1,6 +1,6 @@
 {
   "name": "v-backtop",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": false,
   "main": "./dist/v-backtop.common.js",
   "author": "Bobby<h122656227@gmail.com>",
